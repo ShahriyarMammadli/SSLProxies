@@ -3,14 +3,13 @@
 # Import required libraries
 import requests
 from bs4 import BeautifulSoup
-import time
 import random
 import ProxyItem
 
 # Class
 class SSLProxy(object):
     # Initialize the prerequisite items
-    def __init__(self):
+    def __init__(self, recentlyChecked=False):
         self.URL = 'https://www.sslproxies.org/'
         self.headers = {
             'Accept-Encoding': 'gzip, deflate, sdch',
@@ -20,10 +19,10 @@ class SSLProxy(object):
             'Connection': 'keep-alive',
             }
         self.ProxyItems = []
-        SSLProxy.__proxyList(self)
+        SSLProxy.__proxyList(self, recentlyChecked)
 
     # Proxy List
-    def __proxyList(self):
+    def __proxyList(self, recentlyChecked):
         # Connect to the url
         req = requests.get(url=self.URL, headers=self.headers)
         soup = BeautifulSoup(req.text, 'html.parser')
@@ -31,9 +30,25 @@ class SSLProxy(object):
         body = soup.find('tbody')
         # Get the proxy data iteravtively
         for x in body.findAll('tr'):
-            self.ProxyItems.append(ProxyItem.ProxyItem(x.findAll('td')[0].get_text(), x.findAll('td')[1].get_text(),
-                                             x.findAll('td')[3].get_text(), x.findAll('td')[4].get_text(),
-                                             x.findAll('td')[7].get_text()))
+            if(recentlyChecked):
+                dateType = ""
+                if (x.findAll('td')[7].get_text().split(" ")[1][len(x.findAll('td')[7].get_text().split(" ")[1]) - 1] == 's'):
+                    dateType = x.findAll('td')[7].get_text().split(" ")[1][0:len(x.findAll('td')[7].get_text().split(" ")[1]) - 1]
+                else:
+                    dateType = x.findAll('td')[7].get_text().split(" ")[1]
+                if(dateType == "second"):
+                    self.ProxyItems.append(ProxyItem.ProxyItem(x.findAll('td')[0].get_text(), x.findAll('td')[1].get_text(),
+                                                 x.findAll('td')[3].get_text(), x.findAll('td')[4].get_text(),
+                                                 x.findAll('td')[7].get_text()))
+                elif(dateType == "minute" and x.findAll('td')[7].get_text().split(" ")[0] == "1"):
+                    self.ProxyItems.append(ProxyItem.ProxyItem(x.findAll('td')[0].get_text(), x.findAll('td')[1].get_text(),
+                                                 x.findAll('td')[3].get_text(), x.findAll('td')[4].get_text(),
+                                                 x.findAll('td')[7].get_text()))
+
+            else:
+                self.ProxyItems.append(ProxyItem.ProxyItem(x.findAll('td')[0].get_text(), x.findAll('td')[1].get_text(),
+                                                           x.findAll('td')[3].get_text(), x.findAll('td')[4].get_text(),
+                                                           x.findAll('td')[7].get_text()))
     # Get Proxies
     def getProxyList(self):
         return self.ProxyItems
