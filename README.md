@@ -11,7 +11,7 @@ These libraries are needed to be installed:
 ### SSLProxy(recentlyChecked=False)
 SSLProxy provides proxies in different format.  
   
-**recentlyChecked is an optional parameter for retrieving only recently checked or controlled proxy adresses, i.o.w. these are up-to-date adresses which has more probablity of working normally.  
+* recentlyChecked is an optional parameter for retrieving only recently checked or controlled proxy adresses, i.o.w. these are up-to-date adresses which has more probablity of working normally.  
 * getProxyList() - returns long list of **ProxyItem**s  
 * getRandomProxyObject - returns single random **ProxyItem**  
 * getRandomProxyAdress - returns single random proxy adress in the format of ip:port (e.g. 000.000.000.000:0000)  
