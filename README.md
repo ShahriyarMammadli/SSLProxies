@@ -25,4 +25,22 @@ ProxyItem is an object class for proxies.
 * getAnonymityType() - returns anonymity level of **ProxyItem**  
 * getLastChecked() - returns last check time of **ProxyItem**  
 
-
+## Example Usage
+Example code performs a retrieval of up-to-date proxy address and connects to https://jsonip.com (The website returns the ip adress of the client) with that proxy.
+'''python
+import SSLProxy
+import requests
+# Creates longlist of proxies
+# proxyObj = SSLProxy.SSLProxy()
+# Creates only up-to-date proxies
+proxyObj = SSLProxy.SSLProxy(recentlyChecked=True)
+proxy = proxyObj.getRandomProxyAdress()
+httpText = 'http://' + str(proxy)
+httpsText = 'https://' + str(proxy)
+proxyText = {'http': httpText, 'https': httpsText}
+print(proxyText)
+s = requests.session()
+proxies = proxyText
+s.proxies.update(proxies)
+print(s.get('https://jsonip.com').content)
+'''
