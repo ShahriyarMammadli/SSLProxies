@@ -27,7 +27,7 @@ ProxyItem is an object class for proxies.
 
 ## Example Usage
 Example code performs a retrieval of up-to-date proxy address and connects to https://jsonip.com (The website returns the ip adress of the client) with that proxy.
-'''python
+```python
 import SSLProxy
 import requests
 # Creates longlist of proxies
@@ -43,4 +43,4 @@ s = requests.session()
 proxies = proxyText
 s.proxies.update(proxies)
 print(s.get('https://jsonip.com').content)
-'''
+```
