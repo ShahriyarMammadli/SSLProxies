@@ -26,7 +26,7 @@ ProxyItem is an object class for proxies.
 * getLastChecked() - returns last check time of **ProxyItem**  
 
 ## Example Usage
-Example code performs a retrieval of up-to-date proxy address and connects to https://jsonip.com (The website returns the ip adress of the client) with that proxy.
+Example code performs a retrieval of up-to-date proxy address and then connects to https://jsonip.com (The website returns the ip adress of the client) with that proxy.
 ```python
 import SSLProxy
 import requests
